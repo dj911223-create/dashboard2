@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>충남대학교병원 인근 맛집 대시보드</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .badge.한식 { background: #fee2e2; color: #991b1b; }
+        .badge.양식 { background: #fef3c7; color: #92400e; }
+        .badge.카페 { background: #dbeafe; color: #1e40af; }
+        .badge.분식 { background: #e0e7ff; color: #3730a3; }
+        
+        .info-item {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .menu-box {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .menu-box strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .menu-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .menu-tag {
+            background: #f1f5f9;
+            color: var(--text-sub);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🏥 충남대학교병원 인근 일요일 영업 맛집</h1>
+        <p>도보 및 차량으로 편하게 방문할 수 있는 주변 식당 및 카페 리스트</p>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">전체보기</button>
+        <button class="filter-btn" data-filter="한식">한식</button>
+        <button class="filter-btn" data-filter="양식">양식</button>
+        <button class="filter-btn" data-filter="분식">분식/칼국수</button>
+        <button class="filter-btn" data-filter="카페">카페/브런치</button>
+    </div>
+
+    <div class="grid" id="restaurant-grid">
+        <!-- 1 -->
+        <div class="card" data-category="카페">
+            <div>
+                <div class="card-header">
+                    <span class="title">윈도우로맨스</span>
+                    <span class="badge 카페">카페</span>
+                </div>
+                <div class="info-item">📍 문화동 (도보권)</div>
+                <div class="info-item">⏰ 일요일 10:00 ~ 21:00</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">브런치</span>
+                    <span class="menu-tag">커피</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="card" data-category="한식">
+            <div>
+                <div class="card-header">
+                    <span class="title">반찬식당</span>
+                    <span class="badge 한식">한식</span>
+                </div>
+                <div class="info-item">📍 대사동 (보문산 입구)</div>
+                <div class="info-item">⏰ 일요일 07:00 ~ 19:20</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">보리밥</span>
+                    <span class="menu-tag">고등어구이정식</span>
+                    <span class="menu-tag">두부두루치기</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="card" data-category="한식">
+            <div>
+                <div class="card-header">
+                    <span class="title">금강 버섯집</span>
+                    <span class="badge 한식">한식</span>
+                </div>
+                <div class="info-item">📍 대사동 (보문산)</div>
+                <div class="info-item">⏰ 일요일 10:30 ~ 20:30</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">능이탕</span>
+                    <span class="menu-tag">버섯전골</span>
+                    <span class="menu-tag">백숙</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="card" data-category="한식">
+            <div>
+                <div class="card-header">
+                    <span class="title">다정식당(보문산)</span>
+                    <span class="badge 한식">한식</span>
+                </div>
+                <div class="info-item">📍 대사동 (보문산)</div>
+                <div class="info-item">⏰ 일요일 07:00 ~ 20:30</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">보리밥</span>
+                    <span class="menu-tag">손칼국수</span>
+                    <span class="menu-tag">파전</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="card" data-category="분식">
+            <div>
+                <div class="card-header">
+                    <span class="title">시민칼국수</span>
+                    <span class="badge 분식">분식</span>
+                </div>
+                <div class="info-item">📍 문화동</div>
+                <div class="info-item">⏰ 일요일 10:00 ~ 21:30</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">얼큰이칼국수</span>
+                    <span class="menu-tag">전통칼국수</span>
+                    <span class="menu-tag">왕돈까스</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="card" data-category="한식">
+            <div>
+                <div class="card-header">
+                    <span class="title">대명골식당</span>
+                    <span class="badge 한식">한식</span>
+                </div>
+                <div class="info-item">📍 대사동</div>
+                <div class="info-item">⏰ 일요일 10:30 ~ 21:00</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">백반</span>
+                    <span class="menu-tag">전골·찌개류</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="card" data-category="한식">
+            <div>
+                <div class="card-header">
+                    <span class="title">현대 식당</span>
+                    <span class="badge 한식">한식</span>
+                </div>
+                <div class="info-item">📍 대흥동 (차량 5분)</div>
+                <div class="info-item">⏰ 일요일 10:00 ~ 24:00</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">닭도리탕</span>
+                    <span class="menu-tag">볶음밥</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="card" data-category="분식">
+            <div>
+                <div class="card-header">
+                    <span class="title">장원갑칼국수 대전중구점</span>
+                    <span class="badge 분식">분식</span>
+                </div>
+                <div class="info-item">📍 대흥동 (차량 5분)</div>
+                <div class="info-item">⏰ 일요일 10:30 ~ 21:00</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">해물칼국수</span>
+                    <span class="menu-tag">보쌈</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="card" data-category="양식">
+            <div>
+                <div class="card-header">
+                    <span class="title">테라스키친</span>
+                    <span class="badge 양식">양식</span>
+                </div>
+                <div class="info-item">📍 대흥동/은행동 (차량 5~10분)</div>
+                <div class="info-item">⏰ 일요일 08:30 ~ 21:00</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">수제돈까스</span>
+                    <span class="menu-tag">오므라이스</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="card" data-category="양식">
+            <div>
+                <div class="card-header">
+                    <span class="title">대전은행동별리달리돈까스</span>
+                    <span class="badge 양식">양식</span>
+                </div>
+                <div class="info-item">📍 은행동 (차량 5~10분)</div>
+                <div class="info-item">⏰ 일요일 10:30 ~ 20:30</div>
+            </div>
+            <div class="menu-box">
+                <strong>대표 메뉴</strong>
+                <div class="menu-tags">
+                    <span class="menu-tag">수제돈까스</span>
+                    <span class="menu-tag">파스타</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Active class toggle
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+
+            cards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
